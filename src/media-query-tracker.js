@@ -4,7 +4,7 @@ export const MEDIA_CHANGED = 'rdx-mqt/MEDIA_CHANGED'
 // Reducer
 export function reducer(state = {}, action) {
 	switch (action.type) {
-		case c.MEDIA_CHANGED:
+		case MEDIA_CHANGED:
 			return Object.assign({}, state, action.data)
 		default:
 			return state
@@ -55,7 +55,7 @@ function trackMediaQuery(label, query, dispatch, initData) {
 
 	const mq = global.matchMedia(query)
 
-	const listener = () => dispatch(mediaChange({
+	const listener = () => dispatch(mediaChanged({
 		[label]: mq.matches
 	}))
 	mq.addListener(listener)
@@ -71,7 +71,7 @@ export function mediaQueryTracker(queries) {
 			for (const label in queries) {
 				trackMediaQuery(label, queries[label], dispatch, initData)
 			}
-			dispatch(mediaChange(initData))
+			dispatch(mediaChanged(initData))
 		}
 	}
 }
