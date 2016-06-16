@@ -1,7 +1,7 @@
 redux-mediaquery
 ===
 
-👉 *[Watch me present this at React Europe 2015](https://www.youtube.com/watch?v=dDclOQNlVKw)* 👈
+👉 *[Watch me present this at React Europe 2016](https://www.youtube.com/watch?v=dDclOQNlVKw)* 👈
 
 Intro
 ---
