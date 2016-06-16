@@ -22,12 +22,12 @@ How to use
 1. `npm install --save redux-mediaquery`
 2. In your store creator, import the reducer and action:
 
-  ```es2015
+  ```jsx
   import {reducer as responsive, mediaQueryTracker} from 'redux-mediaquery'
   ```
 3. Add it to the reducers:
 
-  ```es2015
+  ```jsx
   const reducer = combineReducers({
     responsive,
     ...reducers,
@@ -35,7 +35,7 @@ How to use
   ```
 4. After the store is created, indicate the properties that you are interested in:
 
-  ```es2015
+  ```jsx
   store.dispatch(mediaQueryTracker({
     isPhone: "screen and (max-width: 767px)",
     isTablet: "screen and (max-width: 1024px)",
@@ -45,7 +45,7 @@ How to use
   ```
 5. Connect components to the store and conditionally render things:
 
-  ```es2015
+  ```jsx
   @connect(state => ({
     isPhone: state.isPhone,
     innerHeight: state.innerHeight,
