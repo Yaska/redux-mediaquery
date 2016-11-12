@@ -1,5 +1,5 @@
 const listeners = []
-export const MEDIA_CHANGED = 'rdx-mqt/MEDIA_CHANGED'
+export const MEDIA_CHANGED = '@@rdx-mqt/MEDIA_CHANGED'
 
 // Reducer
 export function reducer(state = {}, action) {
