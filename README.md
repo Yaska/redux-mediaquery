@@ -82,6 +82,11 @@ For innerWidth/innerHeight, IE9 is sufficient. For the mediaqueries, this relies
 
 **Object.assign() needs to be polyfilled if missing**. (It is probably already available, through your JSX build)
 
+Changelog
+---
+* v0.10:
+  * change the action type string to have '@@' as a prefix (@moimikey)
+
 Ideas for future development
 ---
 * uglify build
