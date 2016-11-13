@@ -47,8 +47,8 @@ How to use
 
   ```jsx
   @connect(state => ({
-    isPhone: state.isPhone,
-    innerHeight: state.innerHeight,
+    isPhone: state.responsive.isPhone,
+    innerHeight: state.responsive.innerHeight,
   })
   class SomeComponent extends React.Component {
     render() {
