@@ -36,12 +36,12 @@ How to use
 4. After the store is created, indicate the properties that you are interested in:
 
   ```jsx
-  store.dispatch(mediaQueryTracker({
+  mediaQueryTracker({
     isPhone: "screen and (max-width: 767px)",
     isTablet: "screen and (max-width: 1024px)",
     innerWidth: true,
     innerHeight: true,
-  }))
+  }, store.dispatch))
   ```
 5. Connect components to the store and conditionally render things:
 
