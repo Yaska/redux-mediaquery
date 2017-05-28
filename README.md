@@ -101,8 +101,6 @@ Ideas for future development
 ---
 
 * uglify build
-* unlisten call
-* tests, thoughts on how to test this would be appreciated
 * stable API once more feedback from community
 * other special measurements? e.g. "is actual phone", "has touch", …
 * a collection of breakpoints/queries?
