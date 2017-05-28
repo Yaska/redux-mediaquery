@@ -30,7 +30,7 @@ const getSizes = (data) => {
 		data.innerHeight = global.innerHeight
 	}
 }
-const makeOnResize = dispatch => {
+const makeOnResize = dispatch => () => {
 	const data = {}
 	getSizes(data)
 	dispatch(mediaChanged(data))
@@ -64,12 +64,20 @@ function trackMediaQuery(label, query, dispatch, initData) {
 	return
 }
 
-export function mediaQueryTracker(queries, dispatch) {
-    const initData = {}
-		if (global.matchMedia) {
-			for (const label in queries) {
-				trackMediaQuery(label, queries[label], dispatch, initData)
-			}
-			dispatch(mediaChanged(initData))
+function mQTrack(queries, dispatch) {
+	const initData = {}
+	if (global.matchMedia) {
+		for (const label in queries) {
+			trackMediaQuery(label, queries[label], dispatch, initData)
 		}
+		dispatch(mediaChanged(initData))
+	}
+	return unlisten
+}
+
+export function mediaQueryTracker(queries, dispatch) {
+	// Allow using as a redux-thunking action or directly
+	return dispatch
+		? mQTrack(queries, dispatch)
+		: dispatch => mQTrack(queries, dispatch)
 }
