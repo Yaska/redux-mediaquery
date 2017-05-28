@@ -23,12 +23,12 @@ How to use
 ---
 
 1. `npm install --save redux-mediaquery`
-1. In your store creator, import the reducer and action:
+2. In your store creator, import the reducer and action:
 
   ```jsx
   import {reducer as responsive, mediaQueryTracker} from 'redux-mediaquery'
   ```
-1. Add it to the reducers:
+3. Add it to the reducers:
 
   ```jsx
   const reducer = combineReducers({
@@ -36,8 +36,7 @@ How to use
     ...reducers,
   })
   ```
-1. After the store is created, indicate the properties that you are interested in:
-
+4. After the store is created, indicate the properties that you are interested in:
   ```jsx
   const unlisten = mediaQueryTracker({
     isPhone: "screen and (max-width: 767px)",
@@ -49,11 +48,10 @@ How to use
 
   You can call `unlisten()` when you need to remove the listener it puts on window, for example
   when you are 
-  **Note**: this stores the dispatch handler. If you want it to look up the dispatch handler at runtime
-  (e.g. because you change the store), you can dispatch `mediaQueryTracker(...)` as an action.
+  **Note**: If you want, you can dispatch `mediaQueryTracker(...)` as an action.
   In that case, do not provide the `dispatch` argument. This requires you to use the `redux-thunk` middleware.
 
-1. Connect components to the store and conditionally render things:
+5. Connect components to the store and conditionally render things:
 
   ```jsx
   @connect(({responsive}) => ({
@@ -74,7 +72,7 @@ How to use
       )
     }
   ```
-1. sit back and relax 🏝
+6. sit back and relax 🏝
 
 *Pro Tip*: write your media queries so false is the default, for server side rendering or in case matchMedia doesn't exist
 
