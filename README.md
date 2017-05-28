@@ -94,6 +94,10 @@ For innerWidth/innerHeight, IE9 is sufficient. For the mediaqueries, this relies
 Changelog
 ---
 
+* v0.11:
+  * remove reliance on redux-thunk (backwards-compatible)
+  * unlisten for hot reload etc
+  * some tests
 * v0.10:
   * change the action type string to have '@@' as a prefix (@moimikey)
 
