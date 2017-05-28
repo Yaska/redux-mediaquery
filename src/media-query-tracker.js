@@ -15,14 +15,22 @@ export function reducer(state = {}, action) {
 export function mediaChanged(data) {
 	return {
 		type: MEDIA_CHANGED,
-		data
+		data,
 	}
 }
 
+// Cleanup
+const unlisteners = []
+export function unlisten() {
+	unlisteners.forEach(fn => {
+		fn()
+	})
+}
+
+// Handlers
 let trackInnerWidth = false
 let trackInnerHeight = false
-let onResize
-const getSizes = (data) => {
+const getSizes = data => {
 	if (trackInnerWidth) {
 		data.innerWidth = global.innerWidth
 	}
@@ -30,11 +38,13 @@ const getSizes = (data) => {
 		data.innerHeight = global.innerHeight
 	}
 }
+let onResize
 const makeOnResize = dispatch => () => {
 	const data = {}
 	getSizes(data)
 	dispatch(mediaChanged(data))
 }
+
 function trackMediaQuery(label, query, dispatch, initData) {
 	// special queries
 	if (label === 'innerWidth' || label === 'innerHeight') {
@@ -48,6 +58,9 @@ function trackMediaQuery(label, query, dispatch, initData) {
 			onResize = makeOnResize(dispatch)
 			if (global.addEventListener) {
 				global.addEventListener('resize', onResize, true)
+				unlisteners.push(() =>
+					global.removeEventListener('resize', onResize, true)
+				)
 			}
 		}
 		getSizes(initData)
@@ -55,23 +68,33 @@ function trackMediaQuery(label, query, dispatch, initData) {
 
 	const mq = global.matchMedia(query)
 
-	const listener = () => dispatch(mediaChanged({
-		[label]: mq.matches
-	}))
+	const listener = () =>
+		dispatch(
+			mediaChanged({
+				[label]: mq.matches,
+			})
+		)
 	mq.addListener(listener)
+	unlisteners.push(() => mq.removeListener(listener))
 
 	initData[label] = mq.matches
 	return
 }
 
-export function mediaQueryTracker(queries) {
-	return dispatch => {
-		const initData = {}
-		if (global.matchMedia) {
-			for (const label in queries) {
-				trackMediaQuery(label, queries[label], dispatch, initData)
-			}
-			dispatch(mediaChanged(initData))
+function mQTrack(queries, dispatch) {
+	const initData = {}
+	if (global.matchMedia) {
+		for (const label in queries) {
+			trackMediaQuery(label, queries[label], dispatch, initData)
 		}
+		dispatch(mediaChanged(initData))
 	}
+	return unlisten
+}
+
+export function mediaQueryTracker(queries, dispatch) {
+	// Allow using as a redux-thunking action or directly
+	return dispatch
+		? mQTrack(queries, dispatch)
+		: dispatch => mQTrack(queries, dispatch)
 }

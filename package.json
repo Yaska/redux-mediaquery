@@ -1,11 +1,14 @@
 {
   "name": "redux-mediaquery",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Manage your responsive layout via Redux",
   "main": "lib/media-query-tracker.js",
   "scripts": {
-    "build": "babel src --presets babel-preset-es2015 --out-dir lib",
-    "prepublish": "npm run build"
+    "build": "babel src --presets babel-preset-latest --out-dir lib",
+    "prepublish": "npm run build",
+    "prettify": "prettier --use-tabs --no-semi --single-quote --trailing-comma es5 --no-bracket-spacing --write src/**/*.js",
+    "test": "ava",
+    "test-watch": "ava --watch"
   },
   "repository": {
     "type": "git",
@@ -23,8 +26,17 @@
     "url": "https://github.com/Yaska/redux-mediaquery/issues"
   },
   "homepage": "https://github.com/Yaska/redux-mediaquery#readme",
+  "ava": {
+    "babel": "inherit",
+    "require": [
+      "babel-register"
+    ]
+  },
   "devDependencies": {
+    "ava": "^0.19.1",
     "babel-cli": "^6.9.0",
-    "babel-preset-es2015": "^6.9.0"
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "prettier": "^1.3.1"
   }
 }

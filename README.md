@@ -5,12 +5,14 @@ redux-mediaquery
 
 Intro
 ---
+
 This is an ActionCreator for Redux that makes CSS mediaqueries (and more) available in the store. This allows you to declaratively make responsive layouts.
 
 It is very small, without any dependencies, except that the reducer requires Object.assign().
 
 Use Cases
 ---
+
 * Complement CSS, rendering fully different components depending on screen size instead of just showing/hiding parts of the application
 * Update measuring components when screen size changes
 * responsive images
@@ -19,13 +21,14 @@ Use Cases
 
 How to use
 ---
+
 1. `npm install --save redux-mediaquery`
-2. In your store creator, import the reducer and action:
+1. In your store creator, import the reducer and action:
 
   ```jsx
   import {reducer as responsive, mediaQueryTracker} from 'redux-mediaquery'
   ```
-3. Add it to the reducers:
+1. Add it to the reducers:
 
   ```jsx
   const reducer = combineReducers({
@@ -33,23 +36,30 @@ How to use
     ...reducers,
   })
   ```
-4. After the store is created, indicate the properties that you are interested in:
+1. After the store is created, indicate the properties that you are interested in:
 
   ```jsx
-  store.dispatch(mediaQueryTracker({
+  const unlisten = mediaQueryTracker({
     isPhone: "screen and (max-width: 767px)",
     isTablet: "screen and (max-width: 1024px)",
     innerWidth: true,
     innerHeight: true,
-  }))
+  }, store.dispatch))
   ```
-5. Connect components to the store and conditionally render things:
+
+  You can call `unlisten()` when you need to remove the listener it puts on window, for example
+  when you are 
+  **Note**: this stores the dispatch handler. If you want it to look up the dispatch handler at runtime
+  (e.g. because you change the store), you can dispatch `mediaQueryTracker(...)` as an action.
+  In that case, do not provide the `dispatch` argument. This requires you to use the `redux-thunk` middleware.
+
+1. Connect components to the store and conditionally render things:
 
   ```jsx
-  @connect(state => ({
-    isPhone: state.responsive.isPhone,
-    innerHeight: state.responsive.innerHeight,
-  })
+  @connect(({responsive}) => ({
+    isPhone: responsive.isPhone,
+    innerHeight: responsive.innerHeight,
+  }))
   class SomeComponent extends React.Component {
     render() {
       const {isPhone, innerHeight} = this.props
@@ -64,10 +74,9 @@ How to use
       )
     }
   ```
-6. sit back and relax 🏝
+1. sit back and relax 🏝
 
 *Pro Tip*: write your media queries so false is the default, for server side rendering or in case matchMedia doesn't exist
-
 
 Browser Support
 ---
@@ -84,16 +93,15 @@ For innerWidth/innerHeight, IE9 is sufficient. For the mediaqueries, this relies
 
 Changelog
 ---
+
 * v0.10:
   * change the action type string to have '@@' as a prefix (@moimikey)
 
 Ideas for future development
 ---
+
 * uglify build
-* unlisten call
-* tests, thoughts on how to test this would be appreciated
 * stable API once more feedback from community
-* allow use without redux-thunk?
 * other special measurements? e.g. "is actual phone", "has touch", …
 * a collection of breakpoints/queries?
 * server side helpers for converting from user agent string to redux actions
