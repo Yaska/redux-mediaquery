@@ -47,7 +47,8 @@ How to use
   ```
 
   You can call `unlisten()` when you need to remove the listener it puts on window, for example
-  when you are 
+  when you are hot reloading.
+  
   **Note**: If you want, you can dispatch `mediaQueryTracker(...)` as an action.
   In that case, do not provide the `dispatch` argument. This requires you to use the `redux-thunk` middleware.
 
