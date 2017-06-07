@@ -43,7 +43,7 @@ How to use
     isTablet: "screen and (max-width: 1024px)",
     innerWidth: true,
     innerHeight: true,
-  }, store.dispatch))
+  }, store.dispatch)
   ```
 
   You can call `unlisten()` when you need to remove the listener it puts on window, for example
