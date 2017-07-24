@@ -90,6 +90,25 @@ For innerWidth/innerHeight, IE9 is sufficient. For the mediaqueries, this relies
 
 **Object.assign() needs to be polyfilled if missing**. (It is probably already available, through your JSX build)
 
+Server-side rendering
+---
+
+If you combine this with a library like https://github.com/hgoebl/mobile-detect.js, you can decide on the server whether to render for a phone or for desktop, or even for search bots.
+
+To do this, derive e.g. `isPhone` and `isBot` from the `user-agent` header. Then initialize the Redux store, and dispatch the `mediaChanged` action:
+
+```js
+import {mediaChanged} from 'redux-mediaquery'
+
+// ... create store
+
+store.dispatch(mediaChanged({isServer: true, isPhone, isBot}))
+```
+
+Then, in your app, decide what to do with `isServer` and `isBot`. Finally, in the browser build, dispatch `isServer: false` after the first render (use the callback in `React.render(app, element, callback)` for that).
+
+By updating `isServer` only after the first render, you make sure that React can re-use the pre-rendered content.
+
 Changelog
 ---
 
